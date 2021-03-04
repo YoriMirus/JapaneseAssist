@@ -32,7 +32,20 @@ namespace JapaneseAssist.Views
 
             foreach(GridViewColumn column in gv.Columns)
             {
-                column.Width = e.NewSize.Width / gv.Columns.Count;
+                column.Width = (e.NewSize.Width - 20) / gv.Columns.Count;
+            }
+        }
+
+        private void ListView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                //I need to find out, on which listbox/listview the delete button was pressed.
+                //I use == not .Equals(), because I want to know if the sender refers to the FoundKanjiListView, not if the properties are identical
+                if (sender as ListView == FoundKanjiListView)
+                    (DataContext as KanjiAnalysisViewModel).AddIgnoredKanjiCommand.Execute();
+                else if (sender as ListBox == IgnoredKanjiListBox)
+                    (DataContext as KanjiAnalysisViewModel).RemoveIgnoredKanjiCommand.Execute();
             }
         }
     }

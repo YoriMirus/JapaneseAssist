@@ -20,8 +20,9 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="9*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -39,8 +40,10 @@
             <TextBlock Text="Found kanji" Style="{StaticResource ListBoxTitles}"/>
             <TextBlock Text="Ignored kanji" Style="{StaticResource ListBoxTitles}" Grid.Column="1"/>
 
-            <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" Margin="5" ItemsSource="{Binding FoundKanji}"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontSize="16">
+            <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" Keyboard.KeyDown="ListView_KeyDown" x:Name="FoundKanjiListView"
+                      Margin="5" FontSize="16"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ItemsSource="{Binding FoundKanji}" SelectedIndex="{Binding FoundKanjiIndex}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="90" Header="Kanji" DisplayMemberBinding="{Binding Kanji}"/>
@@ -49,8 +52,15 @@
                 </ListView.View>
             </ListView>
 
-            <ListBox Grid.Row="1" Grid.Column="1" x:Name="ignoredKanji" Margin="5" ItemsSource="{Binding IgnoredKanji}" FontSize="16">
+            <ListBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="16" x:Name="IgnoredKanjiListBox"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible" KeyDown="ListView_KeyDown"
+                     SelectedIndex="{Binding IgnoredKanjiIndex}" ItemsSource="{Binding IgnoredKanji}">
             </ListBox>
+
+            <Button Grid.Row="2" Content="Ignore selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    ToolTip="You can press delete to do the same thing!" Command="{Binding AddIgnoredKanjiCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Remove selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    ToolTip="You can press delete to do the same thing!" Command="{Binding RemoveIgnoredKanjiCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

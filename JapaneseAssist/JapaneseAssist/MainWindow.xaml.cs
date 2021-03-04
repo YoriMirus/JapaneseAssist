@@ -24,8 +24,8 @@ namespace JapaneseAssist
     /// </summary>
     public partial class MainWindow : Window
     {
-        private InputTextView inputTextView;
-        private KanjiAnalysisView kanjiAnalysisView;
+        private readonly InputTextView inputTextView;
+        private readonly KanjiAnalysisView kanjiAnalysisView;
         
         public MainWindow()
         {
