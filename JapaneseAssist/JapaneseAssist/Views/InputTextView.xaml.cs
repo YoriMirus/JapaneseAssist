@@ -21,10 +21,10 @@ namespace JapaneseAssist.Views
     /// </summary>
     public partial class InputTextView : UserControl
     {
-        internal InputTextView(InputTextChanged onInputTextChanged)
+        internal InputTextView()
         {
             InitializeComponent();
-            DataContext = new InputTextViewModel(onInputTextChanged);
+            DataContext = new InputTextViewModel();
         }
     }
 }

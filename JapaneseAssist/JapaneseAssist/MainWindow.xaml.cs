@@ -30,7 +30,7 @@ namespace JapaneseAssist
         public MainWindow()
         {
             InitializeComponent();
-            inputTextView = new InputTextView(OnInputTextChanged);
+            inputTextView = new InputTextView();
             kanjiAnalysisView = new KanjiAnalysisView();
 
             WindowContent.Content = inputTextView;
@@ -50,11 +50,6 @@ namespace JapaneseAssist
                         break;
                 }
             }
-        }
-
-        private void OnInputTextChanged(InputTextChangedEventArgs args)
-        {
-            
         }
     }
 }

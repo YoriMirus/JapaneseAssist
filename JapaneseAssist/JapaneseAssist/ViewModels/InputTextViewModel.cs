@@ -21,17 +21,13 @@ namespace JapaneseAssist.ViewModels
                 {
                     _InputText = value;
                     OnPropertyChanged();
-                    InputTextChanged?.Invoke(new InputTextChangedEventArgs(value));
                 }
             }
         }
 
-        public event InputTextChanged InputTextChanged;
-
-        public InputTextViewModel(InputTextChanged onInputTextChanged)
+        public InputTextViewModel()
         {
             InputText = "Write your text here.";
-            InputTextChanged += onInputTextChanged;
         }
     }
 }
