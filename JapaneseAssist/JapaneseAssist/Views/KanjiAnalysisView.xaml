@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="JapaneseAssist.Views.KanjiAnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JapaneseAssist.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="700">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Kanji analysis" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style x:Key="ListBoxTitles" TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="16"/>
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock Text="Found kanji" Style="{StaticResource ListBoxTitles}"/>
+            <TextBlock Text="Ignored kanji" Style="{StaticResource ListBoxTitles}" Grid.Column="1"/>
+
+            <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" Margin="5" ItemsSource="{Binding FoundKanji}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontSize="16">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="90" Header="Kanji" DisplayMemberBinding="{Binding Kanji}"/>
+                        <GridViewColumn Width="100" Header="Appeared" DisplayMemberBinding="{Binding Appeared}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListBox Grid.Row="1" Grid.Column="1" x:Name="ignoredKanji" Margin="5" ItemsSource="{Binding IgnoredKanji}" FontSize="16">
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

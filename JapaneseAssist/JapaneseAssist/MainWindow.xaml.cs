@@ -25,11 +25,13 @@ namespace JapaneseAssist
     public partial class MainWindow : Window
     {
         private InputTextView inputTextView;
+        private KanjiAnalysisView kanjiAnalysisView;
         
         public MainWindow()
         {
             InitializeComponent();
             inputTextView = new InputTextView(OnInputTextChanged);
+            kanjiAnalysisView = new KanjiAnalysisView();
 
             WindowContent.Content = inputTextView;
         }
@@ -43,13 +45,16 @@ namespace JapaneseAssist
                     case "InputText":
                         WindowContent.Content = inputTextView;
                         break;
+                    case "KanjiAnalysis":
+                        WindowContent.Content = kanjiAnalysisView;
+                        break;
                 }
             }
         }
 
         private void OnInputTextChanged(InputTextChangedEventArgs args)
         {
-
+            
         }
     }
 }
