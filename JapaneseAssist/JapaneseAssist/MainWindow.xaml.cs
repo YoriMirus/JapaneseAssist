@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using JapaneseAssist.ViewModels;
+using JapaneseAssist.Views;
+
 namespace JapaneseAssist
 {
     /// <summary>
@@ -20,9 +23,27 @@ namespace JapaneseAssist
     /// </summary>
     public partial class MainWindow : Window
     {
+        private InputTextView inputTextView;
+        
         public MainWindow()
         {
             InitializeComponent();
+            inputTextView = new InputTextView();
+
+            WindowContent.Content = inputTextView;
+        }
+
+        private void SetContent(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button source)
+            {
+                switch ((string)source.Tag)
+                {
+                    case "InputText":
+                        WindowContent.Content = inputTextView;
+                        break;
+                }
+            }
         }
     }
 }
