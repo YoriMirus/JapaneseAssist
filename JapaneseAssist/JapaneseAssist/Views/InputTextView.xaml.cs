@@ -11,6 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using JapaneseAssist.ViewModels;
+using JapaneseAssist.Events;
+
 namespace JapaneseAssist.Views
 {
     /// <summary>
@@ -18,9 +21,10 @@ namespace JapaneseAssist.Views
     /// </summary>
     public partial class InputTextView : UserControl
     {
-        public InputTextView()
+        internal InputTextView(InputTextChanged onInputTextChanged)
         {
             InitializeComponent();
+            DataContext = new InputTextViewModel(onInputTextChanged);
         }
     }
 }

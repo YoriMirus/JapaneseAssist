@@ -13,5 +13,6 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Input text" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Row="1"/>
     </Grid>
 </UserControl>

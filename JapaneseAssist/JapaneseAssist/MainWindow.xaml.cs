@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using JapaneseAssist.ViewModels;
 using JapaneseAssist.Views;
+using JapaneseAssist.Events;
 
 namespace JapaneseAssist
 {
@@ -28,7 +29,7 @@ namespace JapaneseAssist
         public MainWindow()
         {
             InitializeComponent();
-            inputTextView = new InputTextView();
+            inputTextView = new InputTextView(OnInputTextChanged);
 
             WindowContent.Content = inputTextView;
         }
@@ -44,6 +45,11 @@ namespace JapaneseAssist
                         break;
                 }
             }
+        }
+
+        private void OnInputTextChanged(InputTextChangedEventArgs args)
+        {
+
         }
     }
 }
