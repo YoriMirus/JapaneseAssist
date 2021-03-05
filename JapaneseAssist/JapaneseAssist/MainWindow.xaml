@@ -40,8 +40,7 @@
             <Button Style="{StaticResource Buttons}" Tag="InputText" Content="Input text" Grid.Row="2"/>
             <Button Style="{StaticResource Buttons}" Tag="KanjiAnalysis"  Content="Kanji analysis" Grid.Row="3"/>
             <Button Style="{StaticResource Buttons}" Tag="WordsAnalysis" Content="Words analysis" Grid.Row="4"/>
-            <Button Style="{StaticResource Buttons}" Tag="WordsDictionary" Content="Words dictionary" Grid.Row="5"/>
-            <Button Style="{StaticResource Buttons}" Tag="KanjiDictionary" Content="Kanji dictionary" Grid.Row="6"/>
+            <Button Style="{StaticResource Buttons}" Tag="Dictionaries" Content="Dictionaries" Grid.Row="5"/>
 
         </Grid>
 

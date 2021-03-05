@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace JapaneseAssist.ViewModels
                 Foreground = System.Windows.Media.Brushes.Red,
                 Text = "Test"
             });
-            p.TextAlignment = System.Windows.TextAlignment.Center;
+            p.TextAlignment = TextAlignment.Center;
 
             WordInformationDocument.Blocks.Add(p);
 
