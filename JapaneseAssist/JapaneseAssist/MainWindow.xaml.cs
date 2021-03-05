@@ -26,12 +26,14 @@ namespace JapaneseAssist
     {
         private readonly InputTextView inputTextView;
         private readonly KanjiAnalysisView kanjiAnalysisView;
+        private readonly WordsAnalysisView wordsAnalysisView;
         
         public MainWindow()
         {
             InitializeComponent();
             inputTextView = new InputTextView();
             kanjiAnalysisView = new KanjiAnalysisView();
+            wordsAnalysisView = new WordsAnalysisView();
 
             WindowContent.Content = inputTextView;
         }
@@ -47,6 +49,9 @@ namespace JapaneseAssist
                         break;
                     case "KanjiAnalysis":
                         WindowContent.Content = kanjiAnalysisView;
+                        break;
+                    case "WordsAnalysis":
+                        WindowContent.Content = wordsAnalysisView;
                         break;
                 }
             }
