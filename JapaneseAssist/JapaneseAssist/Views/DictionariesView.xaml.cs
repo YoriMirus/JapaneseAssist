@@ -24,6 +24,9 @@ namespace JapaneseAssist.Views
         {
             InitializeComponent();
             DataContext = new DictionariesViewModel();
+
+            KanjiInformation.Document = (DataContext as DictionariesViewModel).KanjiEntry;
+            WordInformation.Document = (DataContext as DictionariesViewModel).WordEntry;
         }
     }
 }
