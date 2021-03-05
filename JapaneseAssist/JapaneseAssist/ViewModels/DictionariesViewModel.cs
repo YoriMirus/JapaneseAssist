@@ -10,6 +10,9 @@ namespace JapaneseAssist.ViewModels
     class DictionariesViewModel : ViewModelBase
     {
         private string _WordInput;
+        /// <summary>
+        /// A word that the user inputted
+        /// </summary>
         public string WordInput
         {
             get
@@ -24,6 +27,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private string _KanjiInput;
+        /// <summary>
+        /// Kanji that the user inputted
+        /// </summary>
         public string KanjiInput
         {
             get
@@ -38,6 +44,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private ButtonCommand _SearchWordButton;
+        /// <summary>
+        /// Search button for the kanji dictionary
+        /// </summary>
         public ButtonCommand SearchWordButton
         {
             get
@@ -52,6 +61,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private ButtonCommand _SearchKanjiButton;
+        /// <summary>
+        /// Search button for the Japanese word dictionary
+        /// </summary>
         public ButtonCommand SearchKanjiButton
         {
             get
@@ -65,7 +77,13 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
+        /// <summary>
+        /// A kanji search result in a format readable by the user.
+        /// </summary>
         public readonly FlowDocument KanjiEntry;
+        /// <summary>
+        /// A word search result in a format readable by the user.
+        /// </summary>
         public readonly FlowDocument WordEntry;
 
         private void SearchKanji()

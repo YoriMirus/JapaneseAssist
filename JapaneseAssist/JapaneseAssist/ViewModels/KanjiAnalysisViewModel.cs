@@ -9,6 +9,9 @@ namespace JapaneseAssist.ViewModels
     class KanjiAnalysisViewModel: ViewModelBase
     {
         private ObservableCollection<FoundKanji> _FoundKanji;
+        /// <summary>
+        /// Kanji that has been found in the inputted text
+        /// </summary>
         public ObservableCollection<FoundKanji> FoundKanji
         {
             get
@@ -23,6 +26,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private ObservableCollection<char> _IgnoredKanji;
+        /// <summary>
+        /// Kanji that won't appear in the FoundKanji list
+        /// </summary>
         public ObservableCollection<char> IgnoredKanji
         {
             get
@@ -37,6 +43,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private int _IgnoredKanjiIndex;
+        /// <summary>
+        /// Which ignored kanji is selected by the user
+        /// </summary>
         public int IgnoredKanjiIndex
         {
             get
@@ -52,6 +61,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private int _FoundKanjiIndex;
+        /// <summary>
+        /// Which found kanji is selected by the user
+        /// </summary>
         public int FoundKanjiIndex
         {
             get
@@ -67,6 +79,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private ButtonCommand _AddIgnoredKanjiCommand;
+        /// <summary>
+        /// A ButtonCommand that adds kanji from the FoundKanji that the user selected
+        /// </summary>
         public ButtonCommand AddIgnoredKanjiCommand
         {
             get
@@ -81,6 +96,9 @@ namespace JapaneseAssist.ViewModels
         }
 
         private ButtonCommand _RemoveIgnoredKanjiCommand;
+        /// <summary>
+        /// A ButtonCommand that removes ignored kanji selected by the user.
+        /// </summary>
         public ButtonCommand RemoveIgnoredKanjiCommand
         {
             get
@@ -94,6 +112,10 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
+        //This will be implemented later once I have an SQLite database storing a kanji dictionary
+        /// <summary>
+        /// Document that contains information about a kanji readable by the user.
+        /// </summary>
         public readonly FlowDocument KanjiInformationDocument;
 
         public KanjiAnalysisViewModel()
@@ -126,29 +148,41 @@ namespace JapaneseAssist.ViewModels
         
         /// <summary>
         /// Adds an ignored kanji from the FoundKanji list.
+        /// Ignores duplicate kanji and handles Exceptions like index being -1
         /// </summary>
         /// <param name="index"></param>
         private void AddIgnoredKanji(int index)
         {
-            FoundKanji fk = this.FoundKanji[index];
-
-            if (!IgnoredKanji.Contains(fk.Kanji))
+            if (index > -1)
             {
-                IgnoredKanji.Add(fk.Kanji);
-                FoundKanji.RemoveAt(index);
+                FoundKanji fk = this.FoundKanji[index];
+
+                if (!IgnoredKanji.Contains(fk.Kanji))
+                {
+                    IgnoredKanji.Add(fk.Kanji);
+                    FoundKanji.RemoveAt(index);
+                }
+
+
+                OnPropertyChanged("IgnoredKanji");
+                OnPropertyChanged("FoundKanji");
             }
-
-
-            OnPropertyChanged("IgnoredKanji");
-            OnPropertyChanged("FoundKanji");
             //Ignored kanji should be added to a database, but this will be enough for now.
         }
+        /// <summary>
+        /// Removes ignored kanji from the IgnoredKanji list.
+        /// Handles exceptions like index being -1
+        /// </summary>
+        /// <param name="index"></param>
         private void RemoveIgnoredKanji(int index)
         {
-            IgnoredKanji.RemoveAt(index);
+            if (index > -1)
+            {
+                IgnoredKanji.RemoveAt(index);
 
-            OnPropertyChanged("IgnoredKanji");
-            OnPropertyChanged("FoundKanji");
+                OnPropertyChanged("IgnoredKanji");
+                OnPropertyChanged("FoundKanji");
+            }
             //Ignored kanji should be removed from the database, but this will be enough for now.
         }
     }

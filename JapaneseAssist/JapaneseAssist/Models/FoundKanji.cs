@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace JapaneseAssist.Models
+﻿namespace JapaneseAssist.Models
 {
     class FoundKanji
     {
