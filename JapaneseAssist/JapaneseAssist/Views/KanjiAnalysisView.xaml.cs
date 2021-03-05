@@ -24,6 +24,7 @@ namespace JapaneseAssist.Views
         {
             InitializeComponent();
             DataContext = new KanjiAnalysisViewModel();
+            KanjiInformationTextBox.Document = (DataContext as KanjiAnalysisViewModel).KanjiInformationDocument;
         }
 
         private void ListViewSizeChanged(object sender, SizeChangedEventArgs e)

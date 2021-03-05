@@ -1,6 +1,8 @@
 ﻿using JapaneseAssist.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace JapaneseAssist.ViewModels
 {
@@ -92,10 +94,24 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
+        public readonly FlowDocument KanjiInformationDocument;
+
         public KanjiAnalysisViewModel()
         {
             AddIgnoredKanjiCommand = new ButtonCommand(() => AddIgnoredKanji(FoundKanjiIndex), () => FoundKanjiIndex != -1);
             RemoveIgnoredKanjiCommand = new ButtonCommand(() => RemoveIgnoredKanji(IgnoredKanjiIndex), () => IgnoredKanjiIndex != -1);
+            KanjiInformationDocument = new FlowDocument();
+
+            Paragraph p = new Paragraph();
+            p.Inlines.Add(new Run()
+            {
+                Text = "Test",
+                FontWeight = System.Windows.FontWeights.Bold,
+                Foreground = System.Windows.Media.Brushes.Red,
+            });
+            p.TextAlignment = System.Windows.TextAlignment.Center;
+
+            KanjiInformationDocument.Blocks.Add(p);
 
             FoundKanji = new ObservableCollection<FoundKanji>
             {
@@ -127,7 +143,6 @@ namespace JapaneseAssist.ViewModels
             OnPropertyChanged("FoundKanji");
             //Ignored kanji should be added to a database, but this will be enough for now.
         }
-
         private void RemoveIgnoredKanji(int index)
         {
             IgnoredKanji.RemoveAt(index);

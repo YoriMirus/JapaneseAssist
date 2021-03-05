@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:JapaneseAssist.Views"
+             xmlns:local="clr-namespace:JapaneseAssist.Views" xmlns:viewmodels="clr-namespace:JapaneseAssist.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:KanjiAnalysisViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="700">
     <Grid Background="White">
@@ -15,6 +15,14 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style x:Key="ContentTitles" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+        </Grid.Resources>
 
         <TextBlock Text="Kanji analysis" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
 
@@ -28,17 +36,9 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style x:Key="ListBoxTitles" TargetType="TextBlock">
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="FontSize" Value="16"/>
-                </Style>
-            </Grid.Resources>
 
-            <TextBlock Text="Found kanji" Style="{StaticResource ListBoxTitles}"/>
-            <TextBlock Text="Ignored kanji" Style="{StaticResource ListBoxTitles}" Grid.Column="1"/>
+            <TextBlock Text="Found kanji" Style="{StaticResource ContentTitles}"/>
+            <TextBlock Text="Ignored kanji" Style="{StaticResource ContentTitles}" Grid.Column="1"/>
 
             <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" Keyboard.KeyDown="ListView_KeyDown" x:Name="FoundKanjiListView"
                       Margin="5" FontSize="16"
@@ -61,6 +61,16 @@
                     ToolTip="You can press delete to do the same thing!" Command="{Binding AddIgnoredKanjiCommand}"/>
             <Button Grid.Row="2" Grid.Column="1" Content="Remove selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
                     ToolTip="You can press delete to do the same thing!" Command="{Binding RemoveIgnoredKanjiCommand}"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource ContentTitles}" Text="Kanji information"/>
+            <RichTextBox Grid.Row="1" Margin="5" x:Name="KanjiInformationTextBox"/>
         </Grid>
     </Grid>
 </UserControl>
