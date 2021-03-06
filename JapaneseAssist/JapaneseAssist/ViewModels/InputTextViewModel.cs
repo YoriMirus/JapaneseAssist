@@ -31,7 +31,7 @@ namespace JapaneseAssist.ViewModels
 
         public InputTextViewModel()
         {
-            InputText = "Write your text here.";
+            //Currently don't really need anything here.
         }
     }
 }

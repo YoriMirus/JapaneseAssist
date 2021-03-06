@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -40,6 +41,8 @@ namespace JapaneseAssistLib
             string text = InputText;
             List<FoundKanji> foundKanji = Helper.GetFoundKanji(text, true);
             foundKanji.RemoveAll(x => IgnoredKanji.Contains(x.Kanji));
+
+            foundKanji = foundKanji.OrderByDescending(x => x.Appeared).ToList();
 
             InputTextChanged?.Invoke(new InputTextChangedEventArgs(InputText, foundKanji));
         }

@@ -11,8 +11,8 @@ namespace JapaneseAssistLib.Events
     public class InputTextChangedEventArgs: EventArgs
     {
         public string NewText { get; private set; }
-        public List<FoundKanji> FoundKanji { get; private set; }
-        public InputTextChangedEventArgs(string newText, List<FoundKanji> foundKanji)
+        public IEnumerable<FoundKanji> FoundKanji { get; private set; }
+        public InputTextChangedEventArgs(string newText, IEnumerable<FoundKanji> foundKanji)
         {
             NewText = newText;
             FoundKanji = foundKanji;
