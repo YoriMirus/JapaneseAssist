@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using System.Text;
 
 using JapaneseAssistLib.Events;
 using JapaneseAssistLib.Helpers;
 using JapaneseAssistLib.Models;
+using JapaneseAssistDB;
 
 namespace JapaneseAssistLib
 {
@@ -30,7 +33,7 @@ namespace JapaneseAssistLib
             }
         }
 
-        public static ObservableCollection<char> IgnoredKanji { get; private set; }
+        public static readonly ObservableCollection<char> IgnoredKanji = new ObservableCollection<char>();
 
         private static void Start()
         {
@@ -42,12 +45,41 @@ namespace JapaneseAssistLib
         }
 
         /// <summary>
+        /// Adds an ignored kanji to the list and then to the database.
+        /// </summary>
+        /// <param name="kanji"></param>
+        /// <remarks>This is the way ignored kanji should be added, otherwise you have to both add the kanji to the obserable collection and to the database yourself.</remarks>
+        public static async Task AddIgnoredKanji(char kanji)
+        {
+            IgnoredKanji.Add(kanji);
+            await DBAccess.AddIgnoredKanjiAsync(kanji);
+        }
+
+        /// <summary>
         /// Initializes the text analyzer (e.g. loads ignored kanji from the database etc.)
         /// </summary>
         public static void Initialize()
         {
-            //No database is implemented, so nothing is here yet. Only instantiating IgnoredKanji to prevent a null exception.
-            IgnoredKanji = new ObservableCollection<char>();
+            IEnumerable<char> ignoredKanji = DBAccess.GetIgnoredKanji();
+            IgnoredKanji.Clear();
+            
+            foreach(char c in ignoredKanji)
+            {
+                IgnoredKanji.Add(c);
+            }
+        }
+        /// <summary>
+        /// Initializes the text analyzer (e.g. loads ignored kanji from the database etc.)
+        /// </summary>
+        public static async Task InitializeAsync()
+        {
+            IEnumerable<char> ignoredKanji = await DBAccess.GetIgnoredKanjiAsync();
+            IgnoredKanji.Clear();
+
+            foreach (char c in ignoredKanji)
+            {
+                IgnoredKanji.Add(c);
+            }
         }
     }
 }

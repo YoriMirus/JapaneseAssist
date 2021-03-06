@@ -1,9 +1,11 @@
-﻿using JapaneseAssist.Models;
+﻿using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
+using JapaneseAssist.Models;
 using JapaneseAssistLib;
 using JapaneseAssistLib.Events;
 using JapaneseAssistLib.Models;
@@ -140,7 +142,7 @@ namespace JapaneseAssist.ViewModels
         /// Ignores duplicate kanji and handles Exceptions like index being -1
         /// </summary>
         /// <param name="index"></param>
-        private void AddIgnoredKanji(int index)
+        private async Task AddIgnoredKanji(int index)
         {
             if (index > -1)
             {
@@ -148,13 +150,11 @@ namespace JapaneseAssist.ViewModels
 
                 if (!IgnoredKanji.Contains(fk.Kanji))
                 {
-                    IgnoredKanji.Add(fk.Kanji);
+                    Stopwatch sw = Stopwatch.StartNew();
                     FoundKanji.RemoveAt(index);
+                    await TextAnalyzer.AddIgnoredKanji(fk.Kanji);
+                    sw.Stop();
                 }
-
-
-                OnPropertyChanged("IgnoredKanji");
-                OnPropertyChanged("FoundKanji");
             }
             //Ignored kanji should be added to a database, but this will be enough for now.
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JapaneseAssistDB.Database_Models
+namespace JapaneseAssistDB.DatabaseModels
 {
     class Word
     {
