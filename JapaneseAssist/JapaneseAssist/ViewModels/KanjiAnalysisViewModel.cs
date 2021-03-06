@@ -134,7 +134,7 @@ namespace JapaneseAssist.ViewModels
             IgnoredKanji = TextAnalyzer.IgnoredKanji;
             FoundKanji = new ObservableCollection<FoundKanji>();
 
-            TextAnalyzer.InputTextChanged += OnInputTextChanged;
+            TextAnalyzer.OutputChanged += OnInputTextChanged;
         }
         
         /// <summary>
@@ -147,35 +147,23 @@ namespace JapaneseAssist.ViewModels
             if (index > -1)
             {
                 FoundKanji fk = this.FoundKanji[index];
-
-                if (!IgnoredKanji.Contains(fk.Kanji))
-                {
-                    Stopwatch sw = Stopwatch.StartNew();
-                    FoundKanji.RemoveAt(index);
-                    await TextAnalyzer.AddIgnoredKanji(fk.Kanji);
-                    sw.Stop();
-                }
+                await TextAnalyzer.AddIgnoredKanji(fk.Kanji);
             }
-            //Ignored kanji should be added to a database, but this will be enough for now.
         }
         /// <summary>
         /// Removes ignored kanji from the IgnoredKanji list.
         /// Handles exceptions like index being -1
         /// </summary>
         /// <param name="index"></param>
-        private void RemoveIgnoredKanji(int index)
+        private async Task RemoveIgnoredKanji(int index)
         {
             if (index > -1)
             {
-                IgnoredKanji.RemoveAt(index);
-
-                OnPropertyChanged("IgnoredKanji");
-                OnPropertyChanged("FoundKanji");
+                await TextAnalyzer.RemoveIgnoredKanji(IgnoredKanji[index]);
             }
-            //Ignored kanji should be removed from the database, but this will be enough for now.
         }
 
-        private void OnInputTextChanged(InputTextChangedEventArgs args)
+        private void OnInputTextChanged(TextAnalysisOutputChangedEventArgs args)
         {
             FoundKanji.Clear();
             foreach(FoundKanji fk in args.FoundKanji)

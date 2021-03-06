@@ -15,7 +15,7 @@ namespace JapaneseAssistLib
 {
     public static class TextAnalyzer
     {
-        public static event InputTextChanged InputTextChanged;
+        public static event TextAnalysisOutputChanged OutputChanged;
 
         private static string _InputText;
         /// <summary>
@@ -44,7 +44,7 @@ namespace JapaneseAssistLib
 
             foundKanji = foundKanji.OrderByDescending(x => x.Appeared).ToList();
 
-            InputTextChanged?.Invoke(new InputTextChangedEventArgs(InputText, foundKanji));
+            OutputChanged?.Invoke(new TextAnalysisOutputChangedEventArgs(InputText, foundKanji));
         }
 
         /// <summary>
@@ -56,6 +56,14 @@ namespace JapaneseAssistLib
         {
             IgnoredKanji.Add(kanji);
             await DBAccess.AddIgnoredKanjiAsync(kanji);
+            Start();
+        }
+
+        public static async Task RemoveIgnoredKanji(char kanji)
+        {
+            IgnoredKanji.Remove(kanji);
+            await DBAccess.RemoveIgnoredKanjiAsync(kanji);
+            Start();
         }
 
         /// <summary>

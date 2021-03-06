@@ -6,13 +6,13 @@ using JapaneseAssistLib.Models;
 
 namespace JapaneseAssistLib.Events
 {
-    public delegate void InputTextChanged(InputTextChangedEventArgs eventArgs);
+    public delegate void TextAnalysisOutputChanged(TextAnalysisOutputChangedEventArgs eventArgs);
 
-    public class InputTextChangedEventArgs: EventArgs
+    public class TextAnalysisOutputChangedEventArgs: EventArgs
     {
         public string NewText { get; private set; }
         public IEnumerable<FoundKanji> FoundKanji { get; private set; }
-        public InputTextChangedEventArgs(string newText, IEnumerable<FoundKanji> foundKanji)
+        public TextAnalysisOutputChangedEventArgs(string newText, IEnumerable<FoundKanji> foundKanji)
         {
             NewText = newText;
             FoundKanji = foundKanji;
