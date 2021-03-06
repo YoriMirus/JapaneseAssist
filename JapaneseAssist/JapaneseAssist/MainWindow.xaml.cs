@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 using JapaneseAssist.ViewModels;
 using JapaneseAssist.Views;
-using JapaneseAssist.Events;
 
 namespace JapaneseAssist
 {

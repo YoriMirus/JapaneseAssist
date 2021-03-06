@@ -4,6 +4,10 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
+using JapaneseAssistLib;
+using JapaneseAssistLib.Events;
+using JapaneseAssistLib.Models;
+
 namespace JapaneseAssist.ViewModels
 {
     class KanjiAnalysisViewModel: ViewModelBase
@@ -122,28 +126,13 @@ namespace JapaneseAssist.ViewModels
         {
             AddIgnoredKanjiCommand = new ButtonCommand(() => AddIgnoredKanji(FoundKanjiIndex), () => FoundKanjiIndex != -1);
             RemoveIgnoredKanjiCommand = new ButtonCommand(() => RemoveIgnoredKanji(IgnoredKanjiIndex), () => IgnoredKanjiIndex != -1);
+
             KanjiInformationDocument = new FlowDocument();
 
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Run()
-            {
-                Text = "Test",
-                FontWeight = System.Windows.FontWeights.Bold,
-                Foreground = System.Windows.Media.Brushes.Red,
-            });
-            p.TextAlignment = System.Windows.TextAlignment.Center;
+            IgnoredKanji = TextAnalyzer.IgnoredKanji;
+            FoundKanji = new ObservableCollection<FoundKanji>();
 
-            KanjiInformationDocument.Blocks.Add(p);
-
-            FoundKanji = new ObservableCollection<FoundKanji>
-            {
-                new FoundKanji('休', 5),
-                new FoundKanji('運', 3)
-            };
-            IgnoredKanji = new ObservableCollection<char>
-            {
-                '日'
-            };
+            TextAnalyzer.InputTextChanged += OnInputTextChanged;
         }
         
         /// <summary>
@@ -184,6 +173,15 @@ namespace JapaneseAssist.ViewModels
                 OnPropertyChanged("FoundKanji");
             }
             //Ignored kanji should be removed from the database, but this will be enough for now.
+        }
+
+        private void OnInputTextChanged(InputTextChangedEventArgs args)
+        {
+            FoundKanji.Clear();
+            foreach(FoundKanji fk in args.FoundKanji)
+            {
+                FoundKanji.Add(fk);
+            }
         }
     }
 }

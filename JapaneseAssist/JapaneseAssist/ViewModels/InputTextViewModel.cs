@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-using JapaneseAssist.Events;
+using JapaneseAssistLib;
 
 namespace JapaneseAssist.ViewModels
 {
@@ -24,6 +24,7 @@ namespace JapaneseAssist.ViewModels
                 {
                     _InputText = value;
                     OnPropertyChanged();
+                    TextAnalyzer.InputText = _InputText;
                 }
             }
         }

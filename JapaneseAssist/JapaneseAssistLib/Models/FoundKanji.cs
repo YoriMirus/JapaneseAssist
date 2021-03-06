@@ -1,6 +1,6 @@
-﻿namespace JapaneseAssist.Models
+﻿namespace JapaneseAssistLib.Models
 {
-    class FoundKanji
+    public class FoundKanji
     {
         /// <summary>
         /// Kanji that was found
