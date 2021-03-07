@@ -63,7 +63,10 @@ namespace JapaneseAssist.ViewModels
             {
                 _IgnoredKanjiIndex = value;
                 OnPropertyChanged();
-                DisplayKanjiInfo(IgnoredKanji[value]);
+
+                //There is no need for await
+                if(value > 0)
+                    DisplayKanjiInfo(IgnoredKanji[value]);
                 RemoveIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
@@ -82,7 +85,10 @@ namespace JapaneseAssist.ViewModels
             {
                 _FoundKanjiIndex = value;
                 OnPropertyChanged();
-                DisplayKanjiInfo(FoundKanji[value].Kanji);
+
+                //There is no need for await
+                if(value > 0)
+                    DisplayKanjiInfo(FoundKanji[value].Kanji);
                 AddIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }

@@ -13,9 +13,15 @@ namespace JapaneseAssistDB
 {
     public static class DBAccess
     {
-        private static readonly SqliteConnectionStringBuilder connectionString = new SqliteConnectionStringBuilder()
+        private static readonly SqliteConnectionStringBuilder WordsDatabaseConnectionString = new SqliteConnectionStringBuilder()
         {
-            DataSource = "Database.db",
+            DataSource = "WordsDatabase.db",
+            Mode = SqliteOpenMode.ReadWrite
+        };
+
+        private static readonly SqliteConnectionStringBuilder KanjiDatabaseConnectionString = new SqliteConnectionStringBuilder()
+        {
+            DataSource = "KanjiDatabase.db",
             Mode = SqliteOpenMode.ReadWrite
         };
 
@@ -25,7 +31,7 @@ namespace JapaneseAssistDB
             List<char> ignoredKanji = new List<char>();
 
             //Get all the IgnoredKanji from the database
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(WordsDatabaseConnectionString.ToString()))
             {
                 ignoredKanjiEntries = (await connection.QueryAsync<IgnoredKanji>("SELECT * FROM IgnoredKanjis")).ToList();
             }
@@ -43,7 +49,7 @@ namespace JapaneseAssistDB
             List<char> ignoredKanji = new List<char>();
 
             //Get all the IgnoredKanji from the database
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(KanjiDatabaseConnectionString.ToString()))
             {
                 ignoredKanjiEntries = connection.Query<IgnoredKanji>("SELECT * FROM IgnoredKanjis").ToList();
             }
@@ -58,14 +64,14 @@ namespace JapaneseAssistDB
 
         public static async Task AddIgnoredKanjiAsync(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(KanjiDatabaseConnectionString.ToString()))
             {
                 await connection.ExecuteAsync($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
             }
         }
         public static void AddIgnoredKanji(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(KanjiDatabaseConnectionString.ToString()))
             {
                 connection.Execute($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
             }
@@ -73,14 +79,14 @@ namespace JapaneseAssistDB
 
         public static async Task RemoveIgnoredKanjiAsync(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(KanjiDatabaseConnectionString.ToString()))
             {
                 await connection.ExecuteAsync($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
             }
         }
         public static void RemoveIgnoredKanji(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
+            using (IDbConnection connection = new SqliteConnection(KanjiDatabaseConnectionString.ToString()))
             {
                 connection.Execute($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
             }
