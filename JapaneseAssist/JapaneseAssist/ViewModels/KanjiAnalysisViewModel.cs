@@ -62,13 +62,6 @@ namespace JapaneseAssist.ViewModels
             {
                 _IgnoredKanjiIndex = value;
                 OnPropertyChanged();
-<<<<<<< HEAD
-
-                //There is no need for await
-                if(value > 0)
-                    DisplayKanjiInfo(IgnoredKanji[value]);
-=======
->>>>>>> parent of d39b082 (Lookup kanji information on kanjiapi.dev and displaying it)
                 RemoveIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
@@ -87,13 +80,6 @@ namespace JapaneseAssist.ViewModels
             {
                 _FoundKanjiIndex = value;
                 OnPropertyChanged();
-<<<<<<< HEAD
-
-                //There is no need for await
-                if(value > 0)
-                    DisplayKanjiInfo(FoundKanji[value].Kanji);
-=======
->>>>>>> parent of d39b082 (Lookup kanji information on kanjiapi.dev and displaying it)
                 AddIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
