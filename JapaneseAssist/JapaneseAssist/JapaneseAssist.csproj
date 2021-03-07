@@ -6,8 +6,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JapaneseAssistLib\JapaneseAssistLib.csproj" />
-  </ItemGroup>
-
 </Project>
