@@ -59,7 +59,7 @@
 
             <Button Grid.Row="2" Content="Ignore selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
                     ToolTip="You can press delete to do the same thing!" Command="{Binding AddIgnoredKanjiCommand}"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Remove" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Button Grid.Row="2" Grid.Column="1" Content="Remove selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
                     ToolTip="You can press delete to do the same thing!" Command="{Binding RemoveIgnoredKanjiCommand}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
@@ -70,7 +70,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Style="{StaticResource ContentTitles}" Text="Kanji information"/>
-            <RichTextBox Grid.Row="1" Margin="5" IsReadOnly="True" x:Name="KanjiInformationTextBox"/>
+            <RichTextBox Grid.Row="1" Margin="5" x:Name="KanjiInformationTextBox"/>
         </Grid>
     </Grid>
 </UserControl>
