@@ -58,32 +58,24 @@ namespace JapaneseAssistDB
 
         public static async Task AddIgnoredKanjiAsync(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
-            {
-                await connection.ExecuteAsync($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
-            }
+            using IDbConnection connection = new SqliteConnection(connectionString.ToString());
+            await connection.ExecuteAsync($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
         }
         public static void AddIgnoredKanji(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
-            {
-                connection.Execute($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
-            }
+            using IDbConnection connection = new SqliteConnection(connectionString.ToString());
+            connection.Execute($"INSERT INTO IgnoredKanjis(Kanji) VALUES('{kanji}')");
         }
 
         public static async Task RemoveIgnoredKanjiAsync(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
-            {
-                await connection.ExecuteAsync($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
-            }
+            using IDbConnection connection = new SqliteConnection(connectionString.ToString());
+            await connection.ExecuteAsync($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
         }
         public static void RemoveIgnoredKanji(char kanji)
         {
-            using (IDbConnection connection = new SqliteConnection(connectionString.ToString()))
-            {
-                connection.Execute($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
-            }
+            using IDbConnection connection = new SqliteConnection(connectionString.ToString());
+            connection.Execute($"DELETE FROM IgnoredKanjis WHERE Kanji='{kanji}'");
         }
     }
 }

@@ -64,7 +64,7 @@ namespace JapaneseAssist.ViewModels
                 _IgnoredKanjiIndex = value;
                 OnPropertyChanged();
                 if(value > -1)
-                DisplayKanjiInfo(IgnoredKanji[value]);
+                    _ = DisplayKanjiInfo(IgnoredKanji[value]);
                 RemoveIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
@@ -84,7 +84,7 @@ namespace JapaneseAssist.ViewModels
                 _FoundKanjiIndex = value;
                 OnPropertyChanged();
                 if(value > -1)
-                    DisplayKanjiInfo(FoundKanji[value].Kanji);
+                    _ = DisplayKanjiInfo(FoundKanji[value].Kanji);
                 AddIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
