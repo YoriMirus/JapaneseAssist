@@ -7,6 +7,7 @@ using System.Windows.Documents;
 
 using JapaneseAssist.Models;
 using JapaneseAssistLib;
+using JapaneseAssistLib.API;
 using JapaneseAssistLib.Events;
 using JapaneseAssistLib.Models;
 
@@ -62,6 +63,8 @@ namespace JapaneseAssist.ViewModels
             {
                 _IgnoredKanjiIndex = value;
                 OnPropertyChanged();
+                if(value > -1)
+                DisplayKanjiInfo(IgnoredKanji[value]);
                 RemoveIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
@@ -80,6 +83,8 @@ namespace JapaneseAssist.ViewModels
             {
                 _FoundKanjiIndex = value;
                 OnPropertyChanged();
+                if(value > -1)
+                    DisplayKanjiInfo(FoundKanji[value].Kanji);
                 AddIgnoredKanjiCommand.FireCanExecuteChanged();
             }
         }
@@ -170,6 +175,66 @@ namespace JapaneseAssist.ViewModels
             {
                 FoundKanji.Add(fk);
             }
+        }
+        private async Task DisplayKanjiInfo(char kanji)
+        {
+            //Get entry
+            KanjiAPIEntry entry = await KanjiAPI.GetKanjiInfoAsync(kanji);
+
+            //Remove previous entry from the document
+            KanjiInformationDocument.Blocks.Clear();
+
+            //Display character
+            Paragraph p = new Paragraph();
+            p.TextAlignment = System.Windows.TextAlignment.Center;
+
+            p.Inlines.Add(new Run()
+            {
+                Text = entry.Kanji,
+                FontSize = 30,
+                FontWeight = System.Windows.FontWeights.Bold
+            });
+            KanjiInformationDocument.Blocks.Add(p);
+
+
+            //Display kanji meanings
+            p = new Paragraph();
+            p.TextAlignment = System.Windows.TextAlignment.Left;
+
+            p.Inlines.Add(new Run()
+            {
+                Text = "Meaning: " + entry.GetMeanings() + "\n",
+                FontSize = 16,
+            });
+
+
+            //Display kanji kunyomi readings
+            p.Inlines.Add(new Run()
+            {
+                Text = "Kunyomi: " + entry.GetKunyomi() + "\n",
+                FontSize = 16,
+            });
+            KanjiInformationDocument.Blocks.Add(p);
+
+
+            //Display kanji onyomi readings
+            p.Inlines.Add(new Run()
+            {
+                Text = "Onyomi: " + entry.GetOnyomi() + "\n",
+                FontSize = 16,
+            });
+            KanjiInformationDocument.Blocks.Add(p);
+
+
+            //Display JLPT
+            p.Inlines.Add(new Run()
+            {
+                Text = "JLPT: N" + entry.Jlpt,
+                FontSize = 16,
+            });
+            KanjiInformationDocument.Blocks.Add(p);
+
+
         }
     }
 }
