@@ -57,5 +57,7 @@ namespace JapaneseAssistLib.Helpers
 
             return foundKanji;
         }
+
+
     }
 }
