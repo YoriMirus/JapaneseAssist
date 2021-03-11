@@ -6,7 +6,7 @@ using JapaneseAssistLib.Models;
 
 namespace JapaneseAssistLib.Helpers
 {
-    internal static class Helper
+    public static class Helper
     {
         /// <summary>
         /// Removes all letters from text that aren't kanji

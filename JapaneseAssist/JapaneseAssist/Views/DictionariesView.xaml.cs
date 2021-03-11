@@ -25,8 +25,21 @@ namespace JapaneseAssist.Views
             InitializeComponent();
             DataContext = new DictionariesViewModel();
 
-            KanjiInformation.Document = (DataContext as DictionariesViewModel).KanjiEntry;
-            WordInformation.Document = (DataContext as DictionariesViewModel).WordEntry;
+            KanjiInformation.Document = (DataContext as DictionariesViewModel).KanjiInformationDocument;
+            WordInformation.Document = (DataContext as DictionariesViewModel).WordInformationDocument;
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            //React to pressing enter as pressing the search button
+            if (e.Key == Key.Enter)
+            {
+                if ((sender as TextBox) == KanjiInputTextBox)
+                    (DataContext as DictionariesViewModel).SearchKanjiButton.Execute();
+                if ((sender as TextBox) == WordInputTextBox)
+                    (DataContext as DictionariesViewModel).SearchWordButton.Execute();
+                e.Handled = true;
+            }
         }
     }
 }
