@@ -26,5 +26,10 @@ namespace JapaneseAssist.Views
             DataContext = new WordsAnalysisViewModel();
             WordInformationTextBox.Document = (DataContext as WordsAnalysisViewModel).WordInformationDocument;
         }
+
+        private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            (DataContext as WordsAnalysisViewModel).SelectedText = (sender as TextBox).SelectedText;
+        }
     }
 }

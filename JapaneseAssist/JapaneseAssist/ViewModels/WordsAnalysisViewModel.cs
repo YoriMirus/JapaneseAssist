@@ -1,8 +1,19 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Text;
+
+using JapaneseAssist.Helpers;
+
+using JapaneseAssistLib;
+using JapaneseAssistLib.Events;
+using JapaneseAssistLib.API;
+using JapaneseAssistLib.Models;
 
 namespace JapaneseAssist.ViewModels
 {
@@ -30,22 +41,42 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
+        private string _SelectedText;
+        public string SelectedText
+        {
+            get
+            {
+                return _SelectedText;
+            }
+            set
+            {
+                if(_SelectedText != value)
+                {
+                    _SelectedText = value;
+                    _ = WaitAndGetEntry();
+                }
+            }
+        }
+
         public WordsAnalysisViewModel()
         {
             WordInformationDocument = new FlowDocument();
+            TextAnalyzer.OutputChanged += OnTextAnalyzerOutputChanged;
+            ApiToDocumentHelper.WriteJishoToDocument(new List<JishoEntry>(), WordInformationDocument, true);
+        }
 
-            Paragraph p = new Paragraph();
-            p.Inlines.Add(new Run()
-            {
-                FontSize = 18,
-                Foreground = System.Windows.Media.Brushes.Red,
-                Text = "Test"
-            });
-            p.TextAlignment = TextAlignment.Center;
+        private async Task WaitAndGetEntry()
+        {
+            string helper = SelectedText;
+            await Task.Run(() => Thread.Sleep(750));
+            if (helper == SelectedText && helper != "")
+                ApiToDocumentHelper.WriteJishoToDocument(await JishoAPI.GetJishoEntry(SelectedText), WordInformationDocument, true);
+        }
 
-            WordInformationDocument.Blocks.Add(p);
 
-            InputText = "Test text.";
+        void OnTextAnalyzerOutputChanged(TextAnalysisOutputChangedEventArgs eventArgs)
+        {
+            InputText = String.Join("。\n", eventArgs.NewText.Split('。'));
         }
     }
 }

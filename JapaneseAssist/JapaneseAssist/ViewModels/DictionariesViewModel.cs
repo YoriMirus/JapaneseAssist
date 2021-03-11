@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System.Text;
 
+using JapaneseAssistLib;
+using JapaneseAssistLib.API;
+using JapaneseAssistLib.Models;
+using JapaneseAssistLib.Helpers;
+
 using JapaneseAssist.Models;
+using JapaneseAssist.Helpers;
 
 namespace JapaneseAssist.ViewModels
 {
@@ -23,6 +31,7 @@ namespace JapaneseAssist.ViewModels
             {
                 _WordInput = value;
                 OnPropertyChanged();
+                SearchWordButton?.FireCanExecuteChanged();
             }
         }
 
@@ -40,6 +49,7 @@ namespace JapaneseAssist.ViewModels
             {
                 _KanjiInput = value;
                 OnPropertyChanged();
+                SearchKanjiButton?.FireCanExecuteChanged();
             }
         }
 
@@ -80,29 +90,39 @@ namespace JapaneseAssist.ViewModels
         /// <summary>
         /// A kanji search result in a format readable by the user.
         /// </summary>
-        public readonly FlowDocument KanjiEntry;
+        public readonly FlowDocument KanjiInformationDocument;
         /// <summary>
         /// A word search result in a format readable by the user.
         /// </summary>
-        public readonly FlowDocument WordEntry;
+        public readonly FlowDocument WordInformationDocument;
 
-        private void SearchKanji()
+        private async void SearchKanji()
         {
-            //Do some searching stuff
+            KanjiInformationDocument.Blocks.Clear();
+            string input = Helper.FilterNonKanji(KanjiInput);
+            foreach (char c in input)
+            {
+                KanjiAPIEntry entry = await KanjiAPI.GetKanjiInfoAsync(c);
+                ApiToDocumentHelper.WriteKanjiToDocument(entry, KanjiInformationDocument, false);
+
+                //Wait for a bit in case there is a lot of kanji so that the servers don't get overwhelmed
+                await Task.Run(() => Thread.Sleep(100));
+            }
         }
 
-        private void SearchWord()
+        private async void SearchWord()
         {
-            //Do some searching stuff
+            List<JishoEntry> entries = await JishoAPI.GetJishoEntry(WordInput);
+            ApiToDocumentHelper.WriteJishoToDocument(entries, WordInformationDocument, true);
         }
 
         public DictionariesViewModel()
         {
-            KanjiInput = "Test kanji.";
-            WordInput = "Test word.";
+            KanjiInput = "";
+            WordInput = "";
 
-            KanjiEntry = new FlowDocument();
-            WordEntry = new FlowDocument();
+            KanjiInformationDocument = new FlowDocument();
+            WordInformationDocument = new FlowDocument();
 
             SearchKanjiButton = new ButtonCommand(SearchKanji, () => KanjiInput.Length > 0);
             SearchWordButton = new ButtonCommand(SearchWord, () => WordInput.Length > 0);
