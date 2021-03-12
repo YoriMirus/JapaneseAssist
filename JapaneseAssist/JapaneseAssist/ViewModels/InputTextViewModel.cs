@@ -30,6 +30,20 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
+        private int _AppendedLineBreaks;
+        public int AppendedLineBreaks
+        {
+            get
+            {
+                return _AppendedLineBreaks;
+            }
+            set
+            {
+                _AppendedLineBreaks = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _MonitorClipboard;
         public bool MonitorClipboard
         {
@@ -52,7 +66,14 @@ namespace JapaneseAssist.ViewModels
         private void OnClipboardContentChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (MonitorClipboard && e.ContentType == SharpClipboard.ContentTypes.Text)
-                InputText += "\n" + (string)e.Content;
+            {
+                string addedLines = "";
+                for(int i = 0; i < AppendedLineBreaks; i++)
+                {
+                    addedLines += "\n";
+                }
+                InputText += addedLines + (string)e.Content;
+            }
         }
     }
 }
