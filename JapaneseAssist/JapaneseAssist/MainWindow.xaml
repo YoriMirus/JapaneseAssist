@@ -21,6 +21,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
@@ -39,8 +40,9 @@
 
             <Button Style="{StaticResource Buttons}" Tag="InputText" Content="Input text" Grid.Row="2"/>
             <Button Style="{StaticResource Buttons}" Tag="KanjiAnalysis"  Content="Kanji analysis" Grid.Row="3"/>
-            <Button Style="{StaticResource Buttons}" Tag="WordsAnalysis" Content="Words analysis" Grid.Row="4"/>
-            <Button Style="{StaticResource Buttons}" Tag="Dictionaries" Content="Dictionaries" Grid.Row="5"/>
+            <Button Style="{StaticResource Buttons}" Tag="KanjiLookup"  Content="Kanji lookup" Grid.Row="4"/>
+            <Button Style="{StaticResource Buttons}" Tag="WordsLookup" Content="Word lookup" Grid.Row="5"/>
+            <Button Style="{StaticResource Buttons}" Tag="Dictionaries" Content="Dictionaries" Grid.Row="6"/>
 
         </Grid>
 

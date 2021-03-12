@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="JapaneseAssist.Views.WordsAnalysisView"
+﻿<UserControl x:Class="JapaneseAssist.Views.KanjiLookupView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,9 +15,9 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Words analysis" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Kanji lookup" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         <TextBox FontSize="14" SelectionChanged="TextBox_SelectionChanged" TextWrapping="Wrap" Text="{Binding InputText}" IsReadOnly="True" Grid.Row="1" Margin="5"/>
-        <RichTextBox x:Name="WordInformationTextBox" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="5"
+        <RichTextBox x:Name="KanjiInformationTextBox" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="5"
                      ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </UserControl>
