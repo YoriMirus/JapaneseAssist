@@ -17,7 +17,7 @@ using JapaneseAssistLib.Models;
 
 namespace JapaneseAssist.ViewModels
 {
-    class WordsAnalysisViewModel : ViewModelBase
+    class WordsLookupViewModel : ViewModelBase
     {
         //This will be implemented later once I have an SQLite database with a Japanese word dictionary.
         /// <summary>
@@ -58,7 +58,7 @@ namespace JapaneseAssist.ViewModels
             }
         }
 
-        public WordsAnalysisViewModel()
+        public WordsLookupViewModel()
         {
             WordInformationDocument = new FlowDocument();
             TextAnalyzer.OutputChanged += OnTextAnalyzerOutputChanged;

@@ -16,29 +16,29 @@ using JapaneseAssist.ViewModels;
 namespace JapaneseAssist.Views
 {
     /// <summary>
-    /// Interaction logic for WordsAnalysisView.xaml
+    /// Interaction logic for KanjiLookupView.xaml
     /// </summary>
-    public partial class WordsAnalysisView : UserControl
+    public partial class KanjiLookupView : UserControl
     {
-        public WordsAnalysisView()
+        public KanjiLookupView()
         {
             InitializeComponent();
-            DataContext = new WordsAnalysisViewModel();
-            WordInformationTextBox.Document = (DataContext as WordsAnalysisViewModel).WordInformationDocument;
+            DataContext = new KanjiLookupViewModel();
+            KanjiInformationTextBox.Document = (DataContext as KanjiLookupViewModel).KanjiInformationDocument;
 
             Paragraph p = new Paragraph() { TextAlignment = TextAlignment.Center };
             p.Inlines.Add(new Run()
             {
-                Text = "Select a word to get a jisho entry.",
+                Text = "Select a kanji to get its information.",
                 FontSize = 14,
                 FontWeight = FontWeights.Bold
             });
-            WordInformationTextBox.Document.Blocks.Add(p);
+            KanjiInformationTextBox.Document.Blocks.Add(p);
         }
 
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            (DataContext as WordsAnalysisViewModel).SelectedText = (sender as TextBox).SelectedText;
+            (DataContext as KanjiLookupViewModel).SelectedText = (sender as TextBox).SelectedText;
         }
     }
 }
