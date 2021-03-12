@@ -20,54 +20,45 @@ namespace JapaneseAssist.Helpers
         /// <param name="clearDocument"></param>
         public static void WriteJishoToDocument(List<JishoEntry> entries, FlowDocument WordInformationDocument, bool clearDocument)
         {
-            if(clearDocument)
+            if (clearDocument)
                 WordInformationDocument.Blocks.Clear();
 
             //Display amount of found entries
             Paragraph p = new Paragraph() { TextAlignment = TextAlignment.Center };
 
-            if (entries.Count == 0)
+            p.Inlines.Add(new Run()
             {
-                p.Inlines.Add(new Run()
-                {
-                    Text = "Select a word to get a jisho entry.",
-                    FontSize = 14,
-                    FontWeight = FontWeights.Bold
-                });
-            }
-            else
-            {
-                p.Inlines.Add(new Run()
-                {
-                    Text = "Found " + entries.Count + " entries.",
-                    FontSize = 14,
-                    FontWeight = FontWeights.Bold
-                });
-            }
-
+                Text = "Found " + entries.Count + " entries.",
+                FontSize = 14,
+                FontWeight = FontWeights.Bold
+            });
+        
             WordInformationDocument.Blocks.Add(p);
 
             foreach (JishoEntry e in entries)
             {
-
                 p = new Paragraph();
 
                 AddMainReadWrite(e, p);
 
+                //If any tags were added, add "\n"
                 if (e.IsCommon || e.Jlpt.Count > 0 || e.Tags.Count > 0)
                     p.Inlines.Add(new Run("\n"));
 
+                //Add tags
                 AddTags(e, p);
                 WordInformationDocument.Blocks.Add(p);
 
+                //Add senses
                 p = new Paragraph();
-
                 AddSenses(e, p);
                 WordInformationDocument.Blocks.Add(p);
 
+                //Add other forms
                 p = new Paragraph();
-
                 AddOtherForms(e, p);
+
+                //p should be added only if there is something in it, otherwise makes a blank space that I don't want
                 if (p.Inlines.Count > 0)
                     WordInformationDocument.Blocks.Add(p);
 
@@ -152,21 +143,22 @@ namespace JapaneseAssist.Helpers
         {
             for (int i = 0; i < entry.Senses.Count; i++)
             {
+                Senses sense = entry.Senses[i];
                 //Display part of speech if it's the first definition or the current senses parts of speech isn't the same as the previous one
-                if (i == 0 || !entry.Senses[i].PartsOfSpeech.SequenceEqual(entry.Senses[i - 1].PartsOfSpeech))
+                if (i == 0 || !sense.PartsOfSpeech.SequenceEqual(entry.Senses[i - 1].PartsOfSpeech))
                 {
                     paragraphToWriteTo.Inlines.Add(new Run()
                     {
                         FontSize = 16,
                         Foreground = Brushes.Gray,
-                        Text = String.Join(", ", entry.Senses[i].PartsOfSpeech) + "\n"
+                        Text = sense.GetPartsOfSpeech() + "\n"
                     });
                 }
 
                 Run englishDef = new Run()
                 {
                     FontSize = 20,
-                    Text = (i + 1).ToString() + ". " + String.Join(", ", entry.Senses[i].EnglishDefinitions)
+                    Text = (i + 1).ToString() + ". " + sense.GetEnglishDefinitions()
                 };
 
                 //Add an additional line to the english definition if it isn't the last one, so the definitions aren't on one line

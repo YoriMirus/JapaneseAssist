@@ -22,6 +22,17 @@
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="FontSize" Value="16"/>
             </Style>
+            <Style x:Key="ListBoxes" TargetType="ListBox">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <EventSetter Event="KeyDown" Handler="ListView_KeyDown"/>
+            </Style>
+            <Style x:Key="Buttons" TargetType="Button">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
         </Grid.Resources>
 
         <TextBlock Text="Kanji analysis" FontWeight="Bold" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
@@ -40,10 +51,8 @@
             <TextBlock Text="Found kanji" Style="{StaticResource ContentTitles}"/>
             <TextBlock Text="Ignored kanji" Style="{StaticResource ContentTitles}" Grid.Column="1"/>
 
-            <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" Keyboard.KeyDown="ListView_KeyDown" x:Name="FoundKanjiListView"
-                      Margin="5" FontSize="16"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      ItemsSource="{Binding FoundKanji}" SelectedIndex="{Binding FoundKanjiIndex}">
+            <ListView Grid.Row="1" SizeChanged="ListViewSizeChanged" x:Name="FoundKanjiListView"
+                      ItemsSource="{Binding FoundKanji}" SelectedIndex="{Binding FoundKanjiIndex}" Style="{StaticResource ListBoxes}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="90" Header="Kanji" DisplayMemberBinding="{Binding Kanji}"/>
@@ -52,15 +61,14 @@
                 </ListView.View>
             </ListView>
 
-            <ListBox Grid.Row="1" Grid.Column="1" Margin="5" FontSize="16" x:Name="IgnoredKanjiListBox"
-                     ScrollViewer.VerticalScrollBarVisibility="Visible" KeyDown="ListView_KeyDown"
-                     SelectedIndex="{Binding IgnoredKanjiIndex}" ItemsSource="{Binding IgnoredKanji}">
+            <ListBox Grid.Row="1" Grid.Column="1" x:Name="IgnoredKanjiListBox"
+                     SelectedIndex="{Binding IgnoredKanjiIndex}" ItemsSource="{Binding IgnoredKanji}" Style="{StaticResource ListBoxes}">
             </ListBox>
 
-            <Button Grid.Row="2" Content="Ignore selected kanji" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    ToolTip="You can press delete to do the same thing!" Command="{Binding AddIgnoredKanjiCommand}"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Remove" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    ToolTip="You can press delete to do the same thing!" Command="{Binding RemoveIgnoredKanjiCommand}"/>
+            <Button Grid.Row="2" Content="Ignore selected kanji" ToolTip="You can press delete to do the same thing!" 
+                    Command="{Binding AddIgnoredKanjiCommand}" Style="{StaticResource Buttons}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Remove" ToolTip="You can press delete to do the same thing!" 
+                    Command="{Binding RemoveIgnoredKanjiCommand}" Style="{StaticResource Buttons}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>

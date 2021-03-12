@@ -62,14 +62,13 @@ namespace JapaneseAssist.ViewModels
         {
             WordInformationDocument = new FlowDocument();
             TextAnalyzer.OutputChanged += OnTextAnalyzerOutputChanged;
-            ApiToDocumentHelper.WriteJishoToDocument(new List<JishoEntry>(), WordInformationDocument, true);
         }
 
         private async Task WaitAndGetEntry()
         {
             string helper = SelectedText;
             await Task.Run(() => Thread.Sleep(750));
-            if (helper == SelectedText && helper != "")
+            if (helper == SelectedText && !string.IsNullOrEmpty(SelectedText))
                 ApiToDocumentHelper.WriteJishoToDocument(await JishoAPI.GetJishoEntry(SelectedText), WordInformationDocument, true);
         }
 

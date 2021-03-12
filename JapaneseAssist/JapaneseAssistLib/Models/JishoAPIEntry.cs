@@ -34,8 +34,22 @@ namespace JapaneseAssistLib.Models
         [JsonPropertyName("english_definitions")]
         public List<string> EnglishDefinitions { get; set; }
 
+        /// <summary>
+        /// Returns english definitions seperated by ", "
+        /// </summary>
+        /// <returns></returns>
+        public string GetEnglishDefinitions()
+        {
+            return String.Join(", ", EnglishDefinitions);
+        }
+
         [JsonPropertyName("parts_of_speech")]
         public List<string> PartsOfSpeech { get; set; }
+
+        public string GetPartsOfSpeech()
+        {
+            return String.Join(", ", PartsOfSpeech);
+        }
 
         [JsonPropertyName("links")]
         public List<Link> Links { get; set; }
@@ -61,12 +75,21 @@ namespace JapaneseAssistLib.Models
 
     public class Attribution
     {
+        /// <summary>
+        /// Usually a bool or a string, contains a link to a Jmdict entry.
+        /// </summary>
         [JsonPropertyName("jmdict")]
         public object Jmdict { get; set; }
 
+        /// <summary>
+        /// Usually a bool or a string, contains a link to a Jmnedict entry.
+        /// </summary>
         [JsonPropertyName("jmnedict")]
         public object Jmnedict { get; set; }
 
+        /// <summary>
+        /// Usually a bool or a string, contains a link to a Dpedia entry.
+        /// </summary>
         [JsonPropertyName("dbpedia")]
         public object Dbpedia { get; set; }
     }

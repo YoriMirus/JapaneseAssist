@@ -25,6 +25,15 @@ namespace JapaneseAssist.Views
             InitializeComponent();
             DataContext = new WordsAnalysisViewModel();
             WordInformationTextBox.Document = (DataContext as WordsAnalysisViewModel).WordInformationDocument;
+
+            Paragraph p = new Paragraph() { TextAlignment = TextAlignment.Center };
+            p.Inlines.Add(new Run()
+            {
+                Text = "Select a word to get a jisho entry.",
+                FontSize = 14,
+                FontWeight = FontWeights.Bold
+            });
+            WordInformationTextBox.Document.Blocks.Add(p);
         }
 
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
