@@ -61,6 +61,7 @@ namespace JapaneseAssist.ViewModels
         public InputTextViewModel()
         {
             TextAnalyzer.ClipboardMonitorer.ClipboardChanged += OnClipboardContentChanged;
+            AppendedLineBreaks = 1;
         }
 
         private void OnClipboardContentChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
