@@ -8,11 +8,32 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
         <TextBlock Text="Input text" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBox Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Margin="10" Grid.Row="1"/>
+        
+        <CheckBox IsChecked="{Binding MonitorClipboard}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0"
+                  FontSize="20" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <CheckBox.Content>
+                Monitor clipboard
+            </CheckBox.Content>
+            <CheckBox.ToolTip>
+                If this is active, any change in the clipboard content will be monitored and automatically copied into the input field. (only works for text)
+            </CheckBox.ToolTip>
+        </CheckBox>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,40,0" Orientation="Horizontal">
+            <StackPanel.ToolTip>
+                "How many line breaks to add before pasting text from clipboard. Useful so that the input field doesn't become chaotic after multiple paste operations.
+            </StackPanel.ToolTip>
+            <TextBlock Text="Appended line breaks: " FontSize="20"/>
+            <TextBox Text="{Binding AppendedLineBreaks, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Right" Width="30" FontSize="20"/>
+        </StackPanel>
     </Grid>
 </UserControl>

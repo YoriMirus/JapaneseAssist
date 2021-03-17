@@ -1,4 +1,5 @@
 ﻿using System;
+using WK.Libraries.SharpClipboardNS;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace JapaneseAssistLib
     public static class TextAnalyzer
     {
         public static event TextAnalysisOutputChanged OutputChanged;
+        public static readonly ObservableCollection<char> IgnoredKanji = new ObservableCollection<char>();
+        public static readonly SharpClipboard ClipboardMonitorer = new SharpClipboard();
 
         private static string _InputText;
         /// <summary>
@@ -34,7 +37,7 @@ namespace JapaneseAssistLib
             }
         }
 
-        public static readonly ObservableCollection<char> IgnoredKanji = new ObservableCollection<char>();
+
 
         private static void Start()
         {

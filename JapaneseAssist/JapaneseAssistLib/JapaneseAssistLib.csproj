@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SharpClipboard" Version="3.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\JapaneseAssistDB\JapaneseAssistDB.csproj" />
   </ItemGroup>
 
