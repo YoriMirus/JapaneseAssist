@@ -69,13 +69,27 @@ namespace JapaneseAssist.ViewModels
             string helper = SelectedText;
             await Task.Run(() => Thread.Sleep(750));
             if (helper == SelectedText && !string.IsNullOrEmpty(SelectedText))
-                ApiToDocumentHelper.WriteJishoToDocument(await JishoAPI.GetJishoEntry(SelectedText), WordInformationDocument, true);
-        }
+            {
+                //Notify the user that the search has started
+                WordInformationDocument.Blocks.Clear();
+                Paragraph p = new Paragraph(new Run()
+                {
+                    Text = "Searching...",
+                    FontSize = 22,
+                    FontWeight = FontWeights.Bold
+                });
+                p.TextAlignment = TextAlignment.Center;
+                WordInformationDocument.Blocks.Add(p);
 
+                //Search for an entry
+                List<JishoEntry> entries = await JishoAPI.GetJishoEntry(SelectedText);
+                ApiToDocumentHelper.WriteJishoToDocument(entries, WordInformationDocument, true);
+            }
+        }
 
         void OnTextAnalyzerOutputChanged(TextAnalysisOutputChangedEventArgs eventArgs)
         {
-            InputText = String.Join("。\n", eventArgs.NewText.Split('。'));
+            InputText = eventArgs.NewText;
         }
     }
 }

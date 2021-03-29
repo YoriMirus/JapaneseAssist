@@ -67,16 +67,29 @@ namespace JapaneseAssist.Helpers
         }
         private static void AddMainReadWrite(JishoEntry entry, Paragraph paragraphToWriteTo)
         {
-            paragraphToWriteTo.Inlines.Add(new Run()
+            //Check if the entry has a form of writing in kanji
+            //If not, add only the reading, otherwise, add both the kanji and the reading
+            if (!string.IsNullOrWhiteSpace(entry.Japanese[0].Word))
             {
-                FontSize = 14,
-                Text = entry.Japanese[0].Reading + "\n"
-            });
-            paragraphToWriteTo.Inlines.Add(new Run()
+                paragraphToWriteTo.Inlines.Add(new Run()
+                {
+                    FontSize = 14,
+                    Text = entry.Japanese[0].Reading + "\n"
+                });
+                paragraphToWriteTo.Inlines.Add(new Run()
+                {
+                    FontSize = 22,
+                    Text = entry.Japanese[0].Word
+                });
+            }
+            else
             {
-                FontSize = 22,
-                Text = entry.Japanese[0].Word
-            });
+                paragraphToWriteTo.Inlines.Add(new Run()
+                {
+                    FontSize = 22,
+                    Text = entry.Japanese[0].Reading
+                });
+            }
         }
         private static void AddTags(JishoEntry entry, Paragraph paragraphToWriteTo)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -99,7 +100,20 @@ namespace JapaneseAssist.ViewModels
         private async void SearchKanji()
         {
             KanjiInformationDocument.Blocks.Clear();
+
+
+            //Notify the user that a search has started
+            Paragraph p = new Paragraph(new Run()
+            {
+                Text = "Searching...",
+                FontSize = 22,
+                FontWeight = FontWeights.Bold
+            });
+            KanjiInformationDocument.Blocks.Add(p);
+
+
             string input = Helper.FilterNonKanji(KanjiInput);
+            KanjiInformationDocument.Blocks.Clear();
             foreach (char c in input)
             {
                 KanjiAPIEntry entry = await KanjiAPI.GetKanjiInfoAsync(c);
@@ -112,6 +126,17 @@ namespace JapaneseAssist.ViewModels
 
         private async void SearchWord()
         {
+            WordInformationDocument.Blocks.Clear();
+
+            Paragraph p = new Paragraph(new Run()
+            {
+                FontSize = 22,
+                Text = "Searching...",
+                FontWeight = FontWeights.Bold,
+            });
+            p.TextAlignment = TextAlignment.Center;
+            WordInformationDocument.Blocks.Add(p);
+
             List<JishoEntry> entries = await JishoAPI.GetJishoEntry(WordInput);
             ApiToDocumentHelper.WriteJishoToDocument(entries, WordInformationDocument, true);
         }
