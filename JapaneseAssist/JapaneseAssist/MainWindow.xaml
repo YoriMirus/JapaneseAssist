@@ -44,7 +44,7 @@
             </Grid.Resources>
 
             <TextBlock Text="日本語" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" FontSize="24" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+            
             <Button Style="{StaticResource Buttons}" Tag="InputText" Content="Input text" Grid.Row="2"/>
             <Button Style="{StaticResource Buttons}" Tag="KanjiAnalysis"  Content="Kanji analysis" Grid.Row="3"/>
             <Button Style="{StaticResource Buttons}" Tag="KanjiLookup"  Content="Kanji lookup" Grid.Row="4"/>
@@ -64,6 +64,9 @@
                     <EventSetter Event="SizeChanged" Handler="TopPannelButtonSizeChanged"/>
                 </Style>
             </Grid.Resources>
+
+            <TextBlock x:Name="CurrentSectionName" Text="Some text" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="150,0,0,0"/>
+
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Content="-" Style="{StaticResource Buttons}" Click="MinimizeButtonClick"/>
                 <Button Content="□" Style="{StaticResource Buttons}" Click="MaximizeButtonClick"/>

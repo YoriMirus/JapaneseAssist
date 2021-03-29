@@ -49,18 +49,23 @@ namespace JapaneseAssist
                 {
                     case "InputText":
                         WindowContent.Content = inputTextView;
+                        CurrentSectionName.Text = "Input text";
                         break;
                     case "KanjiAnalysis":
                         WindowContent.Content = kanjiAnalysisView;
+                        CurrentSectionName.Text = "Kanji analysis";
                         break;
                     case "KanjiLookup":
                         WindowContent.Content = kanjiLookupView;
+                        CurrentSectionName.Text = "Kanji lookup";
                         break;
                     case "WordsLookup":
                         WindowContent.Content = wordsAnalysisView;
+                        CurrentSectionName.Text = "Words lookup";
                         break;
                     case "Dictionaries":
                         WindowContent.Content = dictionariesView;
+                        CurrentSectionName.Text = (string)source.Tag;
                         break;
                 }
             }
