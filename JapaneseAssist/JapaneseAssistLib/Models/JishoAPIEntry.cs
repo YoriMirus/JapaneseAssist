@@ -29,6 +29,15 @@ namespace JapaneseAssistLib.Models
         public string Url { get; set; }
     }
 
+    public class Source
+    {
+        [JsonPropertyName("language")]
+        public string Language { get; set; }
+
+        [JsonPropertyName("word")]
+        public string Word { get; set; }
+    }
+
     public class Senses
     {
         [JsonPropertyName("english_definitions")]
@@ -67,7 +76,7 @@ namespace JapaneseAssistLib.Models
         public List<string> Antonyms { get; set; }
 
         [JsonPropertyName("source")]
-        public List<string> Source { get; set; }
+        public List<Source> Source { get; set; }
 
         [JsonPropertyName("info")]
         public List<string> Info { get; set; }
