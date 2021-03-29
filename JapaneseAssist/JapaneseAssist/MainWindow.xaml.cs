@@ -39,6 +39,7 @@ namespace JapaneseAssist
             dictionariesView = new DictionariesView();
 
             WindowContent.Content = inputTextView;
+            CurrentSectionName.Text = "Input text";
         }
 
         private void SetContent(object sender, RoutedEventArgs e)

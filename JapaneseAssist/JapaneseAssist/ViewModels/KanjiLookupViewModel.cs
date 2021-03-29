@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -62,9 +63,23 @@ namespace JapaneseAssist.ViewModels
             //Wait for a bit to confirm that the user selected the text they wanted
             string helper = SelectedText;
             await Task.Run(() => Thread.Sleep(400));
+
+            //No need to start when there is nothing to search
             if (helper == SelectedText && !string.IsNullOrEmpty(SelectedText))
             {
+                //Notify the user that a search has started
                 KanjiInformationDocument.Blocks.Clear();
+                Paragraph p = new Paragraph(new Run()
+                {
+                    Text = "Searching...",
+                    FontSize = 22,
+                    FontWeight = FontWeights.Bold,
+                });
+                p.TextAlignment = TextAlignment.Center;
+                KanjiInformationDocument.Blocks.Add(p);
+
+
+                //Create a list and filter non-kanji from SelectedText
                 string input = Helper.FilterNonKanji(SelectedText);
                 List<KanjiAPIEntry> entries = new List<KanjiAPIEntry>();
 
@@ -75,6 +90,7 @@ namespace JapaneseAssist.ViewModels
                     await Task.Run(() => Thread.Sleep(50));
                 }
 
+                KanjiInformationDocument.Blocks.Clear();
                 foreach(KanjiAPIEntry entry in entries)
                 {
                     ApiToDocumentHelper.WriteKanjiToDocument(entry, KanjiInformationDocument, false);
